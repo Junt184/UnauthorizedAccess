@@ -1,0 +1,71 @@
+{% extends 'layout.html' %}
+{% block title %}关卡1首页 | 未授权访问靶场{% endblock %}
+{% block content %}
+  <h1>关卡1（Level 1）</h1>
+  <div class="card">
+    <h3>Hint</h3>
+    <button type="button" class="btn btn-secondary" id="hint-btn-index">显示 Hint</button>
+    <div id="hint-box-index" style="display:none; margin-top: 8px;">
+      <p>本关为“覆盖注册漏洞”。如果用户名已存在，重复注册会覆盖旧密码。试试注册 <code>admin</code> 并设置新密码，然后登录并进入“登录后页面”获取管理员 flag。</p>
+    </div>
+  </div>
+
+  <script>
+    (function(){
+      const btn = document.getElementById('hint-btn-index');
+      const box = document.getElementById('hint-box-index');
+      if (btn && box) {
+        btn.addEventListener('click', function(){
+          const visible = box.style.display !== 'none';
+          box.style.display = visible ? 'none' : 'block';
+          btn.textContent = visible ? '显示 Hint' : '隐藏 Hint';
+        });
+      }
+    })();
+  </script>
+
+  {% if identity %}
+    <div class="card">
+      <h3>当前用户（关卡1）</h3>
+      <pre>{{ identity | tojson(indent=2) }}</pre>
+      {% if flag %}
+        <div class="alert alert-info">管理员 flag：</div>
+        <pre>{{ flag }}</pre>
+      {% endif %}
+      <div class="form-actions">
+        <a class="btn" href="{{ url_for('level1.after_login_page') }}">进入登录后页面</a>
+        <a class="btn btn-secondary" href="{{ url_for('level1.logout') }}">退出登录</a>
+      </div>
+    </div>
+  {% else %}
+    {% if error %}
+      <div class="alert alert-error">{{ error }}</div>
+    {% endif %}
+    {% if message %}
+      <div class="alert alert-info">{{ message }}</div>
+    {% endif %}
+    <div class="card">
+      <h3>登录（与首页合并）</h3>
+      <form method="post" action="{{ url_for('level1.login_post') }}" class="form">
+        <input type="hidden" name="next" value="{{ next_url or '' }}">
+        <div class="form-row">
+          <label>用户名</label>
+          <input type="text" name="username" placeholder="alice 或 admin" required>
+        </div>
+        <div class="form-row">
+          <label>密码</label>
+          <input type="password" name="password" placeholder="输入密码" required>
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="btn">登录</button>
+          <a class="btn btn-secondary" href="{{ url_for('level1.register_page') }}">注册</a>
+        </div>
+      </form>
+    </div>
+  {% endif %}
+
+  <div class="card">
+    <h3>返回首页</h3>
+    <a class="btn btn-secondary" href="{{ url_for('web.index') }}">根站点首页</a>
+  </div>
+{% endblock %}

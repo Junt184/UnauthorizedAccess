@@ -1,0 +1,17 @@
+{% extends 'layout.html' %}
+{% block title %}受保护页面 | 未授权访问靶场{% endblock %}
+{% block content %}
+  <h1>受保护页面</h1>
+  <p>仅登录后可访问。当前身份如下：</p>
+  <pre>{{ identity | tojson(indent=2) }}</pre>
+
+  <div class="card">
+    <h3>演示：调用受保护接口</h3>
+    <p>你也可以在浏览器开发者工具中查看 Cookie 中的 access_token。</p>
+    <ul>
+      <li>API: <code>/api/secure-data</code> 需在请求头中携带 Bearer Token（这里演示为页面保护，不自动发起请求）。</li>
+    </ul>
+  </div>
+
+  <a class="btn" href="{{ url_for('web.logout') }}">退出登录</a>
+{% endblock %}

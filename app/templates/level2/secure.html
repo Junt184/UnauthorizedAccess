@@ -1,0 +1,15 @@
+{% extends 'layout.html' %}
+{% block title %}关卡2受保护页面 | 未授权访问靶场{% endblock %}
+{% block content %}
+  <h1>关卡2受保护页面</h1>
+  <p>需要有效的 l2_access_token 才能查看。当前身份：</p>
+  <pre>{{ identity | tojson(indent=2) }}</pre>
+
+  <div class="card">
+    <h3>提示</h3>
+    <p>本关卡的 Cookie 仅在 <code>/level2</code> 路径下发送，其他路径不会携带该 Cookie。</p>
+  </div>
+
+  <a class="btn" href="{{ url_for('level2.logout') }}">退出登录（关卡2）</a>
+  <a class="btn btn-secondary" href="{{ url_for('level2.index') }}">返回关卡2首页</a>
+{% endblock %}

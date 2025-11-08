@@ -1,0 +1,25 @@
+{% extends 'layout.html' %}
+{% block title %}首页 | 未授权访问靶场{% endblock %}
+{% block content %}
+  <h1>未授权访问靶场（SSR示例）</h1>
+  <p>这是一个前后端不分离的示例站点，使用 Flask + Jinja2 渲染页面，结合 JWT（存入 Cookie）实现登录保护。</p>
+
+  {% if identity %}
+    <div class="card">
+      <h3>当前用户</h3>
+      <pre>{{ identity | tojson(indent=2) }}</pre>
+      <a class="btn" href="{{ url_for('web.secure_page') }}">进入受保护页面</a>
+    </div>
+  {% else %}
+    <a class="btn" href="{{ url_for('web.login_page') }}">登录以查看受保护页面</a>
+  {% endif %}
+
+  <div class="card">
+    <h3>关卡入口</h3>
+    <p>每个关卡都有独立的登录与 Cookie 鉴权（路径隔离）：</p>
+    <ul>
+      <li><a href="{{ url_for('level1.index') }}">关卡1（/level1）</a> —— 使用 l1_* Cookie</li>
+      <li><a href="{{ url_for('level2.index') }}">关卡2（/level2）</a> —— 使用 l2_* Cookie</li>
+    </ul>
+  </div>
+{% endblock %}

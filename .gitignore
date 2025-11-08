@@ -1,0 +1,32 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.so
+.cache/
+.pytest_cache/
+
+# Environments
+.env
+.env.*
+*.env
+.venv/
+venv/
+ENV/
+
+# OS / Editor
+.DS_Store
+.vscode/
+.idea/
+
+# Flask / coverage / logs
+instance/
+.coverage
+htmlcov/
+logs/
+*.log
+
+# Frontend (if any)
+node_modules/
+dist/
+build/

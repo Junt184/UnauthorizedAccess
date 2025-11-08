@@ -1,0 +1,25 @@
+{% extends 'layout.html' %}
+{% block title %}关卡2：登录后页面 | 未授权访问靶场{% endblock %}
+{% block content %}
+  <h1>关卡2：登录后页面</h1>
+  <p>本页面需要登录才可访问。关卡2使用 JWT 写入 Cookie（l2_access_token / l2_refresh_token），仅作用于 <code>/level2</code> 路径。</p>
+
+  <div class="card">
+    <h3>当前身份</h3>
+    <pre>{{ identity | tojson(indent=2) }}</pre>
+    {% if flag %}
+      <div class="alert alert-info">管理员 flag：</div>
+      <pre>{{ flag }}</pre>
+    {% else %}
+      <div class="alert alert-info">你已登录，但不是管理员账号，无法查看管理员 flag。</div>
+    {% endif %}
+  </div>
+
+  <div class="card">
+    <h3>操作</h3>
+    <div class="form-actions">
+      <a class="btn" href="{{ url_for('level2.index') }}">返回关卡2首页</a>
+      <a class="btn btn-secondary" href="{{ url_for('level2.logout') }}">退出登录</a>
+    </div>
+  </div>
+{% endblock %}

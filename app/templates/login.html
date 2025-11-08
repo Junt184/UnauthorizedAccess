@@ -1,0 +1,23 @@
+{% extends 'layout.html' %}
+{% block title %}登录 | 未授权访问靶场{% endblock %}
+{% block content %}
+  <h1>登录</h1>
+  {% if error %}
+    <div class="alert alert-error">{{ error }}</div>
+  {% endif %}
+  <form method="post" action="{{ url_for('web.login_post') }}" class="form">
+    <input type="hidden" name="next" value="{{ next_url or '' }}">
+    <div class="form-row">
+      <label>用户名</label>
+      <input type="text" name="username" placeholder="alice" required>
+    </div>
+    <div class="form-row">
+      <label>密码</label>
+      <input type="password" name="password" placeholder="secret" required>
+    </div>
+    <div class="form-actions">
+      <button type="submit" class="btn">登录</button>
+      <a class="btn btn-secondary" href="{{ url_for('web.index') }}">返回首页</a>
+    </div>
+  </form>
+{% endblock %}

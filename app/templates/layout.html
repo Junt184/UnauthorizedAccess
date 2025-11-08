@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{% block title %}未授权访问靶场{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="container">
+      <a href="{{ url_for('web.index') }}" class="brand">UnauthorizedAccess Lab</a>
+      <div class="nav-right">
+        {% if identity %}
+          <span>欢迎，{{ identity.username }}</span>
+          <a href="{{ url_for('web.logout') }}" class="btn">退出</a>
+        {% else %}
+          <a href="{{ url_for('web.login_page') }}" class="btn">登录</a>
+        {% endif %}
+      </div>
+    </div>
+  </nav>
+
+  <main class="container">
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <small>本项目仅用于授权范围内的安全研究与教育</small>
+    </div>
+  </footer>
+</body>
+</html>
